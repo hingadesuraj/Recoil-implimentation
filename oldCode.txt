@@ -1,0 +1,64 @@
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { notificationCounter, totalNotificationSelector } from "./atoms";
+// import { jobsAtom, messagingAtom, networkAtom, notificaitonAtom, notificationCounter, totalNotificationSelector } from "./atoms";
+import { useEffect, useMemo } from "react";
+import axios from "axios";
+
+function App() {
+  
+
+
+  return (
+    <>
+    <RecoilRoot>
+       <Main /> 
+     </RecoilRoot>
+    </>
+  );
+}
+
+function Main(){
+  // const networkNotificatoinCount = useRecoilValue(networkAtom);
+  // const jobsCount = useRecoilValue(jobsAtom);
+  // const messageCount = useRecoilValue(messagingAtom);
+  // const NotificationCount = useRecoilValue(notificaitonAtom);
+
+  // const notification = useRecoilValue(notificationCounter);  is static data now we have to put dynamic data
+
+  const [notification,setNotification] = useRecoilState(notificationCounter);
+
+  useEffect(()=>{
+    axios.get("https://sum-server.100xdevs.com/notifications")
+      .then(res => setNotification(res.data))
+  },[]);
+
+
+
+  // const [messageCount,setMessageCount] = useRecoilState(messagingAtom);
+  // syntax is same for selector and atom 
+
+  // const totalNotificationCount = useRecoilValue(totalNotificationSelector) ;
+  const totalNotificationCount = useRecoilValue(totalNotificationSelector) ;
+
+
+  // instade of using useMemo i use recoil selector.
+  // const totalNotificationCount = useMemo(()=>{
+  //   return networkNotificatoinCount + jobsCount + messageCount + NotificationCount
+  // },[networkNotificatoinCount,jobsCount,messageCount,NotificationCount])
+  
+  return<>
+   <div>
+      <button>Home</button>
+      <button>My Network ({notification.network >= 100 ? "99+": notification.network})</button>
+      <button>Jobs({notification.jobs})</button>
+      <button>Messaging({notification.message})</button>
+      <button>Notification({notification.notifcation})</button>
+      <button>Me ({totalNotificationCount})</button>
+     </div>
+  </>
+}
+
+export default App;
+
+
+

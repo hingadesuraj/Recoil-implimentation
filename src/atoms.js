@@ -1,3 +1,4 @@
+import axios from "axios";
 import { atom, selector } from "recoil";
 
 // export const networkAtom = atom({
@@ -23,14 +24,26 @@ import { atom, selector } from "recoil";
 
 // above all 4 atom consolidate in single atom below
 
+// export const notificationCounter = atom({
+//   key:"notificationCounter",
+//   default:{
+//     network:104,
+//     jobs:0,
+//     notifcation : 3,
+//     message:0
+//   }
+// })
+
+
 export const notificationCounter = atom({
   key:"notificationCounter",
-  default:{
-    network:104,
-    jobs:0,
-    notifcation : 3,
-    message:0
-  }
+  default : selector({
+    key:"notificationCounterSelector",
+    get : async ()=>{
+      const res = await axios.get("https://sum-server.100xdevs.com/notifications");
+      return res.data
+    }
+  })
 }) 
 
 
