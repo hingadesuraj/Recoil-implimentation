@@ -7,11 +7,11 @@ import axios from 'axios'
 
 function App() {
   return <RecoilRoot>  
-    <Todo />
+    <MainApp />
   </RecoilRoot>
 }
 
-function Todo() {
+function MainApp() {
   // const [networkCount, setNetworkCount] = useRecoilState(notifications)
   const totalNotificationCount = useRecoilValue(totalNotificationSelector);
 
