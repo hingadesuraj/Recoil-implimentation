@@ -1,42 +1,32 @@
+import "./App.css";
+import { RecoilRoot, useRecoilValue } from "recoil";
+import { todosAtomFamily } from "./atoms";
+ 
 
-import './App.css'
-import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { notification, notifications, totalNotificationSelector } from './atoms'
-import { useEffect } from 'react'
-import axios from 'axios'
-
+// fetch todo according to passed id
 function App() {
-  return <RecoilRoot>  
-    <Todo />
-  </RecoilRoot>
-}
-
-function Todo() {
-  // const [networkCount, setNetworkCount] = useRecoilState(notifications)
-  const totalNotificationCount = useRecoilValue(totalNotificationSelector);
-
-  const networkCount = useRecoilValue(notification)
-
-  // useEffect(() => {
-  //   // fetch
-  //   axios.get("https://sum-server.100xdevs.com/notifications")
-  //     .then(res => {
-  //       setNetworkCount(res.data)
-  //     })
-  // }, [])
-
   return (
-    <>
-      <button>Home</button>
-      
-      <button>My network ({networkCount.network >= 100 ? "99+" : networkCount.network})</button>
-      <button>Jobs {networkCount.jobs}</button>
-      <button>Messaging ({networkCount.messaging})</button>
-      <button>Notifications ({networkCount.notifications})</button>
-
-      <button>Me ({totalNotificationCount})</button>
-    </>
-  )
+    <RecoilRoot>
+      <Todo id={1} />
+      <Todo id={2} />
+      <Todo id={2} />
+      <Todo id={2} />
+      <Todo id={1} />
+      <Todo id={1} />
+     
+    </RecoilRoot>
+  );
 }
 
-export default App
+function Todo({id}) {
+   
+  const currentTodo = useRecoilValue(todosAtomFamily(id))
+  return <>
+  {currentTodo.title}
+  <br />
+  {currentTodo.description}
+  <br />
+  </>;
+}
+
+export default App;
