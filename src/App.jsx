@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 
 function App() {
-  return <RecoilRoot>
+  return <RecoilRoot>  
     <MainApp />
   </RecoilRoot>
 }
